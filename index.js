@@ -25,7 +25,13 @@ module.exports = opts => {
 			file.contents = Buffer.from(res.css);
 
 			if (res.map && file.sourceMap) {
-				applySourceMap(file, res.map.toString());
+				var map = res.map.toJSON();
+				map.file = file.relative;
+				map.sources = map.sources.map(function (src) {
+					return file.relative;
+				});
+
+				applySourceMap(file, map);
 			}
 
 			const warnings = res.warnings();
