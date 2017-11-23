@@ -22,7 +22,7 @@ module.exports = opts => {
 			from: file.path,
 			to: file.path
 		}).then(res => {
-			file.contents = Buffer.from(res.css);
+			file.contents = new Buffer(res.css);
 
 			if (res.map && file.sourceMap) {
 				var map = res.map.toJSON();
